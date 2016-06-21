@@ -94,7 +94,7 @@ function M.exec(opt, cacheFile)
    local classList, classToIdx = findClasses(opt.data)
 
    print(" | finding all images")
-   local ImagePath, ImageClass = findImages(valDir, classToIdx)
+   local ImagePath, ImageClass = findImages(opt.data, classToIdx)
 
 --   print(" | finding all training images")
 --   local trainImagePath, trainImageClass = findImages(trainDir, classToIdx)
