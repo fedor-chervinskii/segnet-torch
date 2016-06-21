@@ -107,11 +107,11 @@ function M.exec(opt, cacheFile)
       classList = classList,
       train = {
          imagePath = ImagePath[{{1,N*0.8},{}}],
-         imageClass = ImageClass[{{1,N*0.8}],
+         imageClass = ImageClass[{{1,N*0.8}}],
       },
       val = {
          imagePath = ImagePath[{{N*0.8+1,N},{}}],
-         imageClass = ImageClass[{N*0.8+1,N}],
+         imageClass = ImageClass[{{N*0.8+1,N}}],
       },
    }
 

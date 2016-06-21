@@ -23,7 +23,8 @@ function M.create(opt, split)
       script.exec(opt, cachePath)
    end
    local imageInfo = torch.load(cachePath)
-
+   print(split)
+   if imageInfo then print('ok') end
    local Dataset = require('datasets/' .. opt.dataset)
    return Dataset(imageInfo, opt, split)
 end
