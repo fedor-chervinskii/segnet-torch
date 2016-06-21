@@ -90,31 +90,26 @@ function M.exec(opt, cacheFile)
    local imagePath = torch.CharTensor()  -- path to each image in dataset
    local imageClass = torch.LongTensor() -- class index of each image (class index in self.classes)
 
-   local trainDir = paths.concat(opt.data, 'train')
-   local valDir = paths.concat(opt.data, 'val')
-   assert(paths.dirp(trainDir), 'train directory not found: ' .. trainDir)
-   assert(paths.dirp(valDir), 'val directory not found: ' .. valDir)
-
    print("=> Generating list of images")
-   local classList, classToIdx = findClasses(trainDir)
+   local classList, classToIdx = findClasses(opt.data)
 
-   print(" | finding all validation images")
-   local valImagePath, valImageClass = findImages(valDir, classToIdx)
+   print(" | finding all images")
+   local ImagePath, ImageClass = findImages(valDir, classToIdx)
 
-   print(" | finding all training images")
-   local trainImagePath, trainImageClass = findImages(trainDir, classToIdx)
+--   print(" | finding all training images")
+--   local trainImagePath, trainImageClass = findImages(trainDir, classToIdx)
 
    local info = {
       basedir = opt.data,
       classList = classList,
       train = {
-         imagePath = trainImagePath,
-         imageClass = trainImageClass,
+         imagePath = ImagePath, --trainImagePath,
+         imageClass = ImageClass, --trainImageClass,
       },
-      val = {
-         imagePath = valImagePath,
-         imageClass = valImageClass,
-      },
+--      val = {
+--         imagePath = valImagePath,
+--         imageClass = valImageClass,
+--      },
    }
 
    print(" | saving list of images to " .. cacheFile)
