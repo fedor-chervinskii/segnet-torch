@@ -53,12 +53,14 @@ local function findImages(dir, classToIdx)
    local maxLength = -1
    local imagePaths = {}
    local imageClasses = {}
+   local counter = 0
 
    -- Generate a list of all the images and their class
-   while true do
+   while counter < 5000000 do
       local line = f:read('*line')
       if not line then break end
-
+      counter = counter + 1
+      if counter % 100 == 0 then print(counter) end
       local className = paths.basename(paths.dirname(line))
       local filename = paths.basename(line)
       local path = className .. '/' .. filename
