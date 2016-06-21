@@ -98,20 +98,21 @@ function M.exec(opt, cacheFile)
    print(" | finding all images")
    local ImagePath, ImageClass = findImages(opt.data, classToIdx)
 
---   print(" | finding all training images")
---   local trainImagePath, trainImageClass = findImages(trainDir, classToIdx)
+-- dummy split since labels don't matter
+
+   N = ImagePath:size(1)
 
    local info = {
       basedir = opt.data,
       classList = classList,
       train = {
-         imagePath = ImagePath, --trainImagePath,
-         imageClass = ImageClass, --trainImageClass,
+         imagePath = ImagePath[{{1,N*0.8},{}}],
+         imageClass = ImageClass[{{1,N*0.8}],
       },
---      val = {
---         imagePath = valImagePath,
---         imageClass = valImageClass,
---      },
+      val = {
+         imagePath = ImagePath[{{N*0.8+1,N},{}}],
+         imageClass = ImageClass[{N*0.8+1,N}],
+      },
    }
 
    print(" | saving list of images to " .. cacheFile)
