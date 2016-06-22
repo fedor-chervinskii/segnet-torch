@@ -59,7 +59,7 @@ local function createModel(opt)
     net = nn.Sequential()
     net:add(encoder)
     net:add(decoder)
-    net:add(nn.Reshape(opt.nClasses,opt.imgSize[1]*opt.imgSize[2],false))
+    net:add(nn.Reshape(opt.nClasses,opt.imgH*opt.imgW,false))
     net:add(nn.Transpose({2,1}))
     net:add(nn.LogSoftMax())
 
