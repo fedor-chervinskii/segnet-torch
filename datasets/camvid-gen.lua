@@ -45,12 +45,10 @@ local function findImages(dir)
       if not line then break end
       counter = counter + 1
       if counter % 100 == 0 then print(counter) end
-      local filename = paths.basename(line)
-      local path = filename
 
-      table.insert(imagePaths, path)
+      table.insert(imagePaths, line)
 
-      maxLength = math.max(maxLength, #path + 1)
+      maxLength = math.max(maxLength, #line + 1)
    end
 
    f:close()
@@ -69,7 +67,7 @@ function M.exec(opt, cacheFile)
 
    -- find the image path names
    print(" | finding all images")
-   local ImagePath = findImages(opt.data .. '/images')
+   local ImagePath = findImages(opt.data .. '/frames')
    local LabelPath = findImages(opt.data .. '/labels')
 
 -- dummy split since labels don't matter

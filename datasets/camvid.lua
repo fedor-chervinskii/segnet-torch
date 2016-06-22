@@ -62,7 +62,7 @@ function CamvidDataset:_loadImage(path, channels)
 end
 
 function CamvidDataset:size()
-   return self.imageInfo.imageClass:size(1)
+   return self.imageInfo.imagePath:size(1)
 end
 
 -- Computed from random subset of Camvid training images
