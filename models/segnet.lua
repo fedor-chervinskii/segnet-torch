@@ -17,10 +17,6 @@ local function add_block(cont,n_conv,sizes,wid,str,pad)
 end
 
 local function createModel(opt)
-    local num_classes = opt.nClasses
-    batch_size = 1
-    img_size = {180,240}
-    --name = "Segnet_" .. tostring(num_classes) .. "_" .. tostring(img_size[1]) .. "x" .. tostring(img_size[2]) .. ".t7"
 
     conv_sizes = {3,64,64,128,128,256,256,256,512,512,512,512,512,512}
 
@@ -58,18 +54,18 @@ local function createModel(opt)
         counter = counter - 2
         decoder = add_block(decoder,i,sizes)
     end
-    decoder:add(nn.SpatialConvolution(conv_sizes[2],num_classes,3,3,1,1,1))
+    decoder:add(nn.SpatialConvolution(conv_sizes[2],opt.nClasses,3,3,1,1,1))
 
     net = nn.Sequential()
     net:add(encoder)
     net:add(decoder)
-    net:add(nn.Reshape(num_classes,img_size[1]*img_size[2],false))
+    net:add(nn.Reshape(opt.nClasses,opt.imgSize[1]*opt.imgSize[2],false))
     net:add(nn.Transpose({2,1}))
     net:add(nn.LogSoftMax())
 
-    print(tostring(net))
+    --print(tostring(net))
     --torch.save("Models/"..name, net)
-    return net
+    return net:cuda()
 end
 
 return createModel

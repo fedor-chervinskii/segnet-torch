@@ -101,6 +101,7 @@ function M.exec(opt, cacheFile)
 -- dummy split since labels don't matter
 
    N = ImagePath:size(1)
+   opt.imgSize = {224,224}
 
    local info = {
       basedir = opt.data,

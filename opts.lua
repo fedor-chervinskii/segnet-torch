@@ -28,7 +28,7 @@ function M.parse(arg)
    ------------- Training options --------------------
    cmd:option('-nEpochs',         0,       'Number of total epochs to run')
    cmd:option('-epochNumber',     1,       'Manual epoch number (useful on restarts)')
-   cmd:option('-batchSize',       32,      'mini-batch size (1 = pure stochastic)')
+   cmd:option('-batchSize',       1,       'mini-batch size (1 = pure stochastic)')
    cmd:option('-testOnly',        'false', 'Run on validation set only')
    cmd:option('-tenCrop',         'false', 'Ten-crop testing')
    cmd:option('-resume',          'none',  'Path to directory containing checkpoint')
@@ -45,7 +45,7 @@ function M.parse(arg)
    ---------- Model options ----------------------------------
    cmd:option('-shareGradInput',  'false', 'Share gradInput tensors to reduce memory usage')
    cmd:option('-resetClassifier', 'false', 'Reset the fully connected layer for fine-tuning')
-   cmd:option('-nClasses',         0,      'Number of classes in the dataset')
+   cmd:option('-nClasses',         14,      'Number of classes in the dataset')
    cmd:text()
 
    local opt = cmd:parse(arg or {})
@@ -62,6 +62,7 @@ function M.parse(arg)
       end
       -- Default nEpochs=10
       opt.nEpochs = opt.nEpochs == 0 and 10 or opt.nEpochs
+      opt.imgSize = {224,224}
    elseif opt.dataset == 'cityscapes' then
       opt.nEpochs = opt.nEpochs == 0 and 10 or opt.nEpochs
    elseif opt.dataset == 'camvid' then
@@ -75,7 +76,7 @@ function M.parse(arg)
          cmd:error('-nClasses required when resetClassifier is set')
       end
    end
-
+   print(opt)
    return opt
 end
 
