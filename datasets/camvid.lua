@@ -35,7 +35,7 @@ function CamvidDataset:get(i)
 
    return {
       input = image,
-      label = label,
+      target = label,
    }
 end
 
