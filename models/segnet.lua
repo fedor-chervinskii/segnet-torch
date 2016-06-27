@@ -3,7 +3,7 @@
 --
 
 require 'nn'
-require 'MultiLogSoftmax'
+require 'MultiLogSoftMax'
 
 local function add_block(cont,n_conv,sizes,wid,str,pad)
     local wid = wid or 3
