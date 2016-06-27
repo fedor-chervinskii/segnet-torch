@@ -3,6 +3,7 @@
 --
 
 require 'nn'
+require 'MultiLogSoftmax'
 
 local function add_block(cont,n_conv,sizes,wid,str,pad)
     local wid = wid or 3
@@ -59,9 +60,7 @@ local function createModel(opt)
     net = nn.Sequential()
     net:add(encoder)
     net:add(decoder)
-    net:add(nn.Reshape(opt.nClasses,opt.imgH*opt.imgW,false))
-    net:add(nn.Transpose({2,1}))
-    net:add(nn.LogSoftMax())
+    net:add(MultiLogSoftMax(2))
 
     --print(tostring(net))
     --torch.save("Models/"..name, net)
