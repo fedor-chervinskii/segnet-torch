@@ -51,7 +51,7 @@ function M.setup(opt, checkpoint)
       end)
    end
 
-   local criterion = nn.CrossEntropyCriterion(opt.weights):cuda()
+   local criterion = cudnn.SpatialCrossEntropyCriterion()
    return model, criterion
 end
 

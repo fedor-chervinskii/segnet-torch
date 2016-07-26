@@ -3,7 +3,7 @@
 --
 
 require 'nn'
-require 'MultiLogSoftMax'
+require 'models/MultiLogSoftMax'
 
 local function add_block(cont,n_conv,sizes,wid,str,pad)
     local wid = wid or 3
@@ -60,8 +60,7 @@ local function createModel(opt)
     net = nn.Sequential()
     net:add(encoder)
     net:add(decoder)
-    net:add(MultiLogSoftMax(2))
-
+    
     --print(tostring(net))
     --torch.save("Models/"..name, net)
     return net:cuda()

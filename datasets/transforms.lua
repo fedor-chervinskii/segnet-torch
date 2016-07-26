@@ -37,7 +37,9 @@ end
 function M.Scale(size, interpolation)
    interpolation = interpolation or 'bicubic'
    return function(input)
-      local w, h = input:size(3), input:size(2)
+      nDim = input:nDimension()
+      if nDim == 2 then interpolation = 'simple' end
+      local w, h = input:size(nDim), input:size(nDim-1)
       if (w <= h and w == size) or (h <= w and h == size) then
          return input
       end
@@ -50,11 +52,12 @@ function M.Scale(size, interpolation)
 end
 
 -- Crop to centered rectangle
-function M.CenterCrop(size)
+function M.CenterCrop(target_h, target_w)
    return function(input)
-      local w1 = math.ceil((input:size(3) - size)/2)
-      local h1 = math.ceil((input:size(2) - size)/2)
-      return image.crop(input, w1, h1, w1 + size, h1 + size) -- center patch
+      nDim = input:nDimension()
+      local w1 = math.ceil((input:size(nDim) - target_w)/2)
+      local h1 = math.ceil((input:size(nDim-1) - target_h)/2)
+      return image.crop(input, w1, h1, w1 + target_w, h1 + target_h) -- center patch
    end
 end
 

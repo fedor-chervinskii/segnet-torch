@@ -72,8 +72,13 @@ function M.exec(opt, cacheFile)
 
 -- dummy split since labels don't matter
 
-   N = ImagePath:size(1)
-
+   if ImagePath:nElement() == 0 then
+       print("no images found in the directory, probably wrong path")
+       N = 0
+   else
+       N = ImagePath:size(1)
+   end
+        
    local info = {
       basedir = opt.data,
       classList = classList,

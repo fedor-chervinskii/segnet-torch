@@ -41,7 +41,11 @@ end
 
 function CamvidDataset:_loadImage(path, channels)
    local ok, input = pcall(function()
-      return image.load(path, channels, 'float')
+      if channels == 1 then
+        return image.load(path, channels, 'byte')
+      else
+        return image.load(path, channels, 'float')
+      end
    end)
 
    -- Sometimes image.load fails because the file extension does not match the
@@ -82,22 +86,26 @@ local pca = {
 function CamvidDataset:preprocess()
    if self.split == 'train' then
       return t.Compose{
-         t.RandomSizedCrop(224),
-         t.ColorJitter({
-            brightness = 0.4,
-            contrast = 0.4,
-            saturation = 0.4,
-         }),
-         t.Lighting(0.1, pca.eigval, pca.eigvec),
-         t.ColorNormalize(meanstd),
-         t.HorizontalFlip(0.5),
+           t.Scale(320),
+           t.CenterCrop(240,320),
+--         t.RandomSizedCrop(224),
+--         t.ColorJitter({
+--            brightness = 0.4,
+--            contrast = 0.4,
+--            saturation = 0.4,
+--         }),
+--         t.Lighting(0.1, pca.eigval, pca.eigvec),
+--         t.ColorNormalize(meanstd),
+--         t.HorizontalFlip(0.5),
       }
    elseif self.split == 'val' then
-      local Crop = self.opt.tenCrop and t.TenCrop or t.CenterCrop
+--      local Crop = self.opt.tenCrop and t.TenCrop or t.CenterCrop
       return t.Compose{
-         t.Scale(256),
-         t.ColorNormalize(meanstd),
-         Crop(224),
+           t.Scale(320),
+           t.CenterCrop(240,320),
+--         t.Scale(256),
+--         t.ColorNormalize(meanstd),
+--         Crop(224),
       }
    else
       error('invalid split: ' .. self.split)
